@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+бнбн
+spec:
+  replicas: 2
+бнбн
+    spec:
+      containers:
+      - name: mysql-slave
+        image: mysql-slave:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"
+        - name: MYSQL_REPLICATION_USER
+          value: "repl"
+        - name: MYSQL_REPLICATION_PASSWORD
+          value: "repl"
+        - name: MYSQL_MASTER_SERVICE_HOST
+          value: mysql-master
+        ports:
+        - containerPort: 3306
