@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 apiVersion: v1
 kind: Service
 metadata:
@@ -52,3 +53,59 @@ template:
               value: sst
             - name: MYSQL_ROOT_PASSWORD
               value: root
+=======
+apiVersion: v1
+kind: Service
+metadata:
+  name: pxc-node3
+  labels:
+    node: pxc-node3
+spec:
+  ports:
+    - port: 3306
+      name: mysql
+    - port: 4444
+      name: state-snapshot-transfer
+    - port: 4567
+      name: replication-traffic
+    - port: 4568
+      name: incremental-state-transfer
+  selector:
+    node: pxc-node3
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: pxc-node3
+spec:
+  replicas: 1
+template:
+    metadata:
+      labels:
+        node: pxc-node3
+        unit: pxc-cluster
+    spec:
+      containers:
+        - resources:
+            limits:
+              cpu: 0.3
+          image: capttofu/percona_xtradb_cluster_5_6
+          name: pxc-node1
+          ports:
+            - containerPort: 3306
+            - containerPort: 4444
+            - containerPort: 4567
+            - containerPort: 4568
+          env:
+            - name: GALERA_CLUSTER
+              value: "true"
+            - name: WSREP_CLUSTER_ADDRESS
+              value: gcomm://
+            - name: WSREP_SST_USER
+              value: sst
+            - name: WSREP_SST_PASSWORD
+              value: sst
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+>>>>>>> 69a34b282b49bb6c1e707e19e5f082dc09955618

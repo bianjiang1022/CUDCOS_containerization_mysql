@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,3 +12,18 @@ spec:
   selector:
     unit: pxc-cluster
 
+=======
+apiVersion: v1
+kind: Service
+metadata:
+  name: pxc-cluster
+  labels:
+    unit: pxc-cluster
+spec:
+  ports:
+    - port: 3306
+      name: mysql
+  selector:
+    unit: pxc-cluster
+
+>>>>>>> 69a34b282b49bb6c1e707e19e5f082dc09955618
